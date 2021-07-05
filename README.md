@@ -43,5 +43,49 @@ Clone this repository.
     iex(15)> Sub.get(sub, "hello")             
     "world"
     iex(16)> Sub.get(sub, "halo")
+    "Universe" 
+```
+
+```elixir
+    iex(1)> c("pub.ex")
+    [Pub]
+    iex(2)> c("sub_timer.ex")
+    [SubTimer]
+    iex(3)> pub = Pub.start()
+    #PID<0.123.0>
+    iex(4)> sub = SubTimer.start()
+    Staring up
+    #PID<0.125.0>                         
+    iex(5)> Pub.subscribe(pub, sub)
+    {:subscribe, #PID<0.125.0>}                              
+    iex(6)> Pub.message(pub, "hi", "how")
+    {:put, #PID<0.123.0>, "hi", "how"}
+    {:message, #PID<0.123.0>, "hi", "how"}                         
+    iex(7)> SubTimer.get(sub, "hello")
+    {:get, "hello", #PID<0.107.0>}
+    nil                            
+    iex(8)> SubTimer.get(sub, "not")
+    {:get, "not", #PID<0.107.0>}
+    nil                            
+    iex(9)> SubTimer.get(sub, "hi")  
+    {:get, "hi", #PID<0.107.0>}
+    "how"                                      
+    iex(10)> Pub.message(pub, "hello", "world")
+    {:put, #PID<0.123.0>, "hello", "world"} 
+    # Message published to PubSub
+    {:message, #PID<0.123.0>, "hello", "world"} 
+    # Message delivered to SubTimer via subscription
+    {:put, #PID<0.123.0>, "halo", "Universe"} 
+    # Message published to PubSub via if condition in SubTimer                                   
+    iex(11)> SubTimer.get(sub, "hello") 
+    {:get, "hello", #PID<0.107.0>}
+    "world"                               
+    iex(12)> SubTimer.get(sub, "halo")
+    {:get, "halo", #PID<0.107.0>}
+    "Universe"                               
+    iex(13)> SubTimer.get(sub, "not") 
+    # State updated by timer after the if condition satisfied
+    {:get, "not", #PID<0.107.0>}
+    "easy"
 ```
 
