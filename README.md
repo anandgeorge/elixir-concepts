@@ -191,3 +191,21 @@ Overloading allows you to define different implementations of the same function 
     iex(4)> Overload.hello(:say)      
     "Hello World"
 ```
+
+#### Subscription tree with Phoenix PubSub
+
+Creating a subscription tree with Phoenix PubSub and two processes, one for Publishing and another for Subscribing. Add {:phoenix_pubsub, "~> 2.0"} to the dependencies. See folder sup_pub_sub for implementation details.
+
+```elixir
+    cd sup_pub_sub
+    iex -S mix
+    iex(1)> 73
+    95
+    51
+    32
+    60
+    92
+    67
+    48
+    60
+```

@@ -1,0 +1,2 @@
+defmodule SupPubSub do
+end
