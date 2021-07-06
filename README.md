@@ -7,9 +7,10 @@ A set of examples to explain concepts in Elixir. We cover processes, agents and 
 Clone this repository.
 
 ```elixir
-	cd elixir-concepts
-	iex
+cd elixir-concepts
+iex
 ```
+#### State machine implementation basics
 
 ```elixir
     iex(1)> c("api.ex")
@@ -20,6 +21,11 @@ Clone this repository.
     {:put, "hello", "world"}
     iex(4)> API.get(pid, "hello")
     "world"
+```
+
+#### State machine using Agents
+
+```elixir
     iex(5)> c("agentapi.ex")
     [AgentAPI]
     iex(6)> {:ok, pid} = AgentAPI.start()
@@ -28,6 +34,11 @@ Clone this repository.
     :ok
     iex(8)> AgentAPI.get(pid, "hello")
     "world"
+```
+
+#### State machine with PubSub
+
+```elixir
     iex(9)> c("pub.ex")
     [Pub]
     iex(10)> c("sub.ex")
@@ -45,6 +56,8 @@ Clone this repository.
     iex(16)> Sub.get(sub, "halo")
     "Universe" 
 ```
+
+#### State machine with PubSub and Timed functions
 
 ```elixir
     iex(1)> c("pub.ex")
@@ -89,3 +102,35 @@ Clone this repository.
     "easy"
 ```
 
+#### State machine using a GenServer and a public interface
+
+```elixir
+iex(1)> c("gs.ex")
+[GS]
+iex(2)> GS.start_link([:hello])
+{:ok, #PID<0.116.0>}
+iex(3)> GS.pop(App) 
+:hello
+iex(4)> GS.push(App, :world)
+:ok
+iex(5)> GS.pop(App)         
+:world
+```
+
+#### Supervised State machine using a GenServer and a public interface
+
+```elixir
+iex(1)> c("gs.ex")
+[GS]
+iex(2)> c("app.ex")  
+[App]
+iex(3)> App.start(nil, nil) 
+{:ok, #PID<0.123.0>}
+iex(4)> GS.pop(App)
+:hello
+iex(5)> GS.push(App, :world) 
+:ok
+iex(6)> GS.pop(App)         
+:world
+iex(7)> 
+```
