@@ -158,3 +158,14 @@ Go to the root of the application one and run the app. Note how we call a functi
     iex(1)> Two.hello
     "Hello from Two"
 ```
+#### Creating a supervised app i.e. an app with a supervision tree
+
+```elixir
+    mix new supervised --sup
+    cd supervised
+    iex -S mix
+    [1, 2, 3]
+    iex(1)> :observer.start()
+```
+
+Notice the Observer shows two processes Elixir.Supervised.Child and Elixir.Child created with a link to Elixir.Supervised.Supervisor. This name is taken from the options (opts) given to start the Supervisor.
