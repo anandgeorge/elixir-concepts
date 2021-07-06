@@ -174,3 +174,20 @@ Notice the Observer shows two processes Elixir.Supervised.Child and Elixir.Child
 
 See struct.ex. Notice keys that are required listed under @enforce_keys.
 The struct will be referred to as %State{} where State is the name of the module with the function defintion.
+
+#### Overloading functions and functions with guard clauses
+
+Overloading allows you to define different implementations of the same function based on the number of arguments. You can also define guard clauses for a set of functions with same number of arguments but different conditions. See overload.ex.
+
+```elixir
+    iex(1)> c("overload.ex")
+    [Overload]
+    iex(2)> Overload.hello(:say, 1)
+    Sorry, you cannot have a number 1 for a name
+    :ok
+    iex(3)> Overload.hello(:say, "Al") 
+    Hello Al
+    :ok
+    iex(4)> Overload.hello(:say)      
+    "Hello World"
+```
