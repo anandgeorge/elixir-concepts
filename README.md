@@ -169,3 +169,8 @@ Go to the root of the application one and run the app. Note how we call a functi
 ```
 
 Notice the Observer shows two processes Elixir.Supervised.Child and Elixir.Child created with a link to Elixir.Supervised.Supervisor. This name is taken from the options (opts) given to start the Supervisor.
+
+#### Defining a struct
+
+See struct.ex. Notice keys that are required listed under @enforce_keys.
+The struct will be referred to as %State{} where State is the name of the module with the function defintion.
