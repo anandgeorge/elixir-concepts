@@ -105,32 +105,56 @@ iex
 #### State machine using a GenServer and a public interface
 
 ```elixir
-iex(1)> c("gs.ex")
-[GS]
-iex(2)> GS.start_link([:hello])
-{:ok, #PID<0.116.0>}
-iex(3)> GS.pop(App) 
-:hello
-iex(4)> GS.push(App, :world)
-:ok
-iex(5)> GS.pop(App)         
-:world
+    iex(1)> c("gs.ex")
+    [GS]
+    iex(2)> GS.start_link([:hello])
+    {:ok, #PID<0.116.0>}
+    iex(3)> GS.pop(App) 
+    :hello
+    iex(4)> GS.push(App, :world)
+    :ok
+    iex(5)> GS.pop(App)         
+    :world
 ```
 
 #### Supervised State machine using a GenServer and a public interface
 
 ```elixir
-iex(1)> c("gs.ex")
-[GS]
-iex(2)> c("app.ex")  
-[App]
-iex(3)> App.start(nil, nil) 
-{:ok, #PID<0.123.0>}
-iex(4)> GS.pop(App)
-:hello
-iex(5)> GS.push(App, :world) 
-:ok
-iex(6)> GS.pop(App)         
-:world
-iex(7)> 
+    iex(1)> c("gs.ex")
+    [GS]
+    iex(2)> c("app.ex")  
+    [App]
+    iex(3)> App.start(nil, nil) 
+    {:ok, #PID<0.123.0>}
+    iex(4)> GS.pop(App)
+    :hello
+    iex(5)> GS.push(App, :world) 
+    :ok
+    iex(6)> GS.pop(App)         
+    :world
+    iex(7)> 
+```
+
+#### Creating an umbrella app i.e. an app with two or more applications
+
+```elixir
+    mix new umbrella --umbrella
+    cd umbrella
+    cd apps
+    mix new one
+    mix new two
+    cd one
+```
+
+Link the two applications by adding two as a dependency in one in mix.exs of app one
+    {:two, in_umbrella: true}
+
+Run mix.deps to update dependency
+
+Go to the root of the application one and run the app. Note how we call a function from app two in one.
+
+```elixir
+    iex -S mix
+    iex(1)> Two.hello
+    "Hello from Two"
 ```
