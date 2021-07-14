@@ -5,7 +5,7 @@ defmodule Pub do
 
     def loop(subscribers) do
       new = receive do
-        pid -> process(subscribers, pid)
+        message -> process(subscribers, message)
       end
       loop(new)
     end

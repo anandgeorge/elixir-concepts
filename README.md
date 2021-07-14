@@ -205,7 +205,7 @@ Creating a subscription tree with Phoenix PubSub and two processes, one for Publ
     32
     60
     92
-    67
+    , 67
     48
     60
 ```
