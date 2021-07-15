@@ -226,3 +226,20 @@ Go to the root of the application. Notice how we pass in the name of the process
     iex(5)> GenAPI.get(:new, "hello")
     "orld"
 ```
+
+#### Creating a supervision tree
+
+Go to the root of the application. We are creating a multi-level hierarchy with different approaches.
+
+```elixir
+    iex(1)> c("sup.ex")
+    [A, B, C, D]
+    iex(2)> A.start()
+    {:ok, #PID<0.125.0>}
+    iex(3)> D.put(:d, "hello", "world")
+    :ok
+    iex(4)> D.get(:d, "hello")
+    "world"
+    iex(5)> Agent.get(:b, fn list -> list end)
+    []
+```
