@@ -209,3 +209,20 @@ Creating a subscription tree with Phoenix PubSub and two processes, one for Publ
     48
     60
 ```
+
+#### Creating a simple GenServer
+
+Go to the root of the application. Notice how we pass in the name of the process and the initial state as agruments.
+
+```elixir
+    iex(1)> c("genapi.ex")
+    [GenAPI]
+    iex(2)> GenAPI.start(%{name: :new, state: %{hello: "world"}})
+    {:ok, #PID<0.116.0>}
+    iex(3)> GenAPI.get(:new, :hello)
+    "world"
+    iex(4)> GenAPI.put(:new, "hello", "orld") 
+    :ok
+    iex(5)> GenAPI.get(:new, "hello")
+    "orld"
+```
