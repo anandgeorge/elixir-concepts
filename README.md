@@ -243,3 +243,28 @@ Go to the root of the application. We are creating a multi-level hierarchy with 
     iex(5)> Agent.get(:b, fn list -> list end)
     []
 ```
+
+#### Creating children dynamically using the Dynamic Supervisor
+
+Go to the root of the application. We are creating a set of supervised process dynamically.
+
+```elixir
+    iex(1)> c("dyn.ex")
+    [Alphabet, Dynamic]
+    iex(2)> Dynamic.start()
+    {:ok, #PID<0.119.0>}
+    iex(3)> Dynamic.create("a")
+    {:ok, #PID<0.121.0>}
+    iex(4)> Dynamic.create("b") 
+    {:ok, #PID<0.123.0>}
+    iex(5)> Dynamic.create("c") 
+    {:ok, #PID<0.125.0>}
+    iex(6)> Process.whereis(String.to_atom("a")) 
+    #PID<0.121.0>
+    iex(7)> Process.whereis(String.to_atom("b"))  
+    #PID<0.123.0>
+    iex(8)> Process.whereis(String.to_atom("c")) 
+    #PID<0.125.0>
+    iex(9)> Process.whereis(String.to_atom("d")) 
+    nil
+```
