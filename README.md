@@ -268,3 +268,69 @@ Go to the root of the application. We are creating a set of supervised process d
     iex(9)> Process.whereis(String.to_atom("d")) 
     nil
 ```
+
+#### Set up, configure Ecto and write to a Postgres database
+
+Create a new app
+
+mix new ectopg --sup
+
+Add ecto to the dependencies and run mix deps.get to get the dependencies
+
+```elixir
+    defp deps do
+    [
+        {:ecto_sql, "~> 3.0"},
+        {:postgrex, ">= 0.0.0"}
+    ]
+    end
+```
+mix ecto.gen.repo -r Ectopg.Repo
+
+Add the following to the supervision tree 
+   {Ectopg.Repo, []}
+
+This generates the config/config.ex file with standard configuration. Modify username, password and database name as required.
+
+Add this at the bottom of the config file
+
+config :ectopg,
+  ecto_repos: [Ectopg.Repo]
+
+Run mix ecto.create to create the database 
+
+Run a migration to modify the structure of the database
+
+mix ecto.gen.migration create_people. 
+
+This will create a new migration template in /priv/repo/migrations that will be used to define the migration
+Navigate to the create_people migration and add these modifications. 
+Note that create_people is only the name of the migration.
+
+Add these lines to the migration file to create the table
+
+    create table(:people) do
+      add :first_name, :string
+      add :last_name, :string
+      add :age, :integer
+    end
+
+Define the scheme to match the structure of the table
+
+```elixir
+    defmodule Friends.Person do
+        use Ecto.Schema
+
+        schema "people" do
+            field :first_name, :string
+            field :last_name, :string
+            field :age, :integer
+        end
+    end
+```
+
+Initialise a new record and insert into database
+
+person = %Ectopg.Person{}
+
+Ectopg.Repo.insert(person)
